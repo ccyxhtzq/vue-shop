@@ -14,12 +14,18 @@
 ></el-input>
   </el-form-item>
   <div class="login_button">
-  <el-button @click="loginrefvite">登录</el-button>
+  <el-button @click="loginrefvite" :plain="true">登录</el-button>
 <el-button @click="resetloginref">重置</el-button></div>
 </el-form>
 
         </div>
+        
+  
     </div>
+    
+ 
+
+
 </template>
 <script>
     export default{
@@ -46,14 +52,32 @@
             this.$refs.loginref.resetFields();
         },
         loginrefvite(){
+        //    登陆成功
             this.$refs.loginref.validate((valid)=>{
               if(valid==true){
-                this.$router.push('/home')
-              }
+                this.$message({
+          message: '恭喜你登陆成功',
+          type: 'success'
+        });
+            this.$router.push('/home')}
+        else{
+            
+              this.$message({
+          showClose: true,
+          message: '登陆失败',
+          type: 'warning'
             });
         }
-       }
+        })
+           
+            
+        }
     }
+}
+
+        
+            
+    
 </script>
 <style lang="less" scoped>
 .login_container{
