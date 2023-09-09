@@ -2,7 +2,7 @@ const express = require('express')
 
 const app = express();
 
-app.all('/',(request,response)=>{
+app.all('http://127.0.0.1:9000',(request,response)=>{
     response.send('hello express');
 });
 

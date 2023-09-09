@@ -61,7 +61,7 @@
 </template>
 <script>
       import { getdata } from '@/api';
-
+      
       export default{
         data(){
           return{
@@ -83,12 +83,12 @@
 
           }
         },
+        
         mounted(){
           getdata().then((data)=>{
             console.log(data);
             this.menulist = data.data.list
-            console.log(this.menulist);
-            console.log(this.menulist[0].group.oname);
+            
             
           })
         }
