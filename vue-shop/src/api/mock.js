@@ -1,5 +1,6 @@
 import Mock from'mockjs'
 
+
 Mock.mock('http://127.0.0.1:9000/api/home/getdata',function(){
     console.log('拦截到了');
     
@@ -78,4 +79,78 @@ Mock.mock('http://127.0.0.1:9000/api/Users',function(){
                 address:"重庆市",
                 dochange:"eee"}]
     }
+})
+
+Mock.mock('http://127.0.0.1:9000/api/Pass',function(){
+    return{
+        data:[
+            {
+                "id": "01",
+                "authName": "商品管理",
+                "aute":"一级",
+                "level": "0",
+                "pid": 0,
+                "path": null
+            },
+            {
+                "id": "02",
+                "authName": "订单管理",
+                "aute":"一级",
+                "level": "0",
+                "pid": 0,
+                "path": null
+            },{
+                "id": "03",
+                "authName": "商品管理",
+                "aute":"二级",
+                "level": "0",
+                "pid": 0,
+                "path": null
+            },{
+                "id": "04",
+                "authName": "权限管理",
+                "aute":"一级",
+                "level": "0",
+                "pid": 0,
+                "path": null
+            },{
+                "id": "05",
+                "authName": "仓库管理",
+                "aute":"二级",
+                "level": "0",
+                "pid": 0,
+                "path": null
+            }
+            
+        ]}
+})
+
+Mock.mock('http://127.0.0.1:9000/api/Dopass',function(){
+    return{
+        data:[
+            {
+                "id": "01",
+                "authName": "商品管理",
+                "aute":"一级",
+                "level": "张三",
+                "pid": 0,
+                "path": null
+            },
+            {
+                "id": "02",
+                "authName": "订单管理",
+                "aute":"一级",
+                "level": "李四",
+                "pid": 0,
+                "path": null
+            },{
+                "id": "03",
+                "authName": "商品管理",
+                "aute":"二级",
+                "level": "王五",
+                "pid": 0,
+                "path": null
+            }
+            
+        ]}
 })

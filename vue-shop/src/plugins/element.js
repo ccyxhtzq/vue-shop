@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Button } from 'element-ui'
+import { Button, MessageBox } from 'element-ui'
 import { Form } from 'element-ui'
 import { FormItem } from 'element-ui'
 import { Input } from 'element-ui'
@@ -16,11 +16,13 @@ import { Icon } from 'element-ui'
 import{Breadcrumb} from'element-ui'
 import{BreadcrumbItem} from'element-ui'
 import{Card} from'element-ui'
-import{Row,Col} from'element-ui'
-import{Table,TableColumn,Switch,Tooltip,Pagination} from'element-ui'
+import{Row,Col,Dialog} from'element-ui'
+import{Table,TableColumn,Switch,Tooltip,Pagination,Calendar} from'element-ui'
 
 Vue.use(BreadcrumbItem)
+Vue.use(Dialog)
 Vue.use(Tooltip)
+Vue.use(Calendar)
 Vue.use(Pagination)
 Vue.use(Switch)
 Vue.use(Row)
@@ -43,3 +45,4 @@ Vue.use(Menu)
 Vue.use(MenuItem)
 Vue.use(MenuItemGroup)
 Vue.prototype.$message = Message
+Vue.prototype.$alert = MessageBox

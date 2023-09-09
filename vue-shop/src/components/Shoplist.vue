@@ -1,5 +1,10 @@
 <template>
     <div>
-        shoplist页面
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+  <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
+  <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+  <el-breadcrumb-item>订单列表</el-breadcrumb-item>
+  
+</el-breadcrumb>
     </div>
 </template>

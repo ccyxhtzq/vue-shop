@@ -11,17 +11,51 @@
 <el-card class="box-card">
   <el-row :gutter="30">
   <el-col :span="13">
-    <el-input placeholder="请输入内容"  class="input-with-select" v-model="list">
-    <el-button slot="append" icon="el-icon-search"></el-button>
+    <el-input placeholder="请输入内容"  class="input-with-select" v-model="querylist">
+    <el-button slot="append" icon="el-icon-search" @click="result"></el-button>
   </el-input>
 </el-col>
 <el-col :span="6">
-    <el-button type="primary">添加用户</el-button>
+    
+    
+    <el-button type="primary" @click="dialogVisible = true">添加用户</el-button>
+
+<el-dialog
+@close="closeform"
+  title="添加用户"
+  :visible.sync="dialogVisible"
+  width="40%"
+  :before-close="handleClose">
+  <span>
+    <el-form ref="addform" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+  <el-form-item label="姓名" prop="name" >
+    <el-input v-model="ruleForm.name"></el-input>
+  </el-form-item>
+
+  <el-form-item label="电话" prop="tel">
+    <el-input v-model="ruleForm.tel"></el-input>
+  </el-form-item>
+
+  <el-form-item label="角色" prop="play">
+    <el-input v-model="ruleForm.play"></el-input>
+  </el-form-item>
+
+  <el-form-item label="地址" prop="address">
+    <el-input v-model="ruleForm.address"></el-input>
+  </el-form-item>
+</el-form>
+
+  </span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="adduser">确 定</el-button>
+  </span>
+</el-dialog>
 </el-col>
 </el-row>
 
 <template>
-  <el-table border :data="Userlist" 
+  <el-table border :data="resultlist" 
     style="width: 100%">
     <el-table-column
       prop="id"    
@@ -67,24 +101,8 @@
     <el-table-column
       prop="address"
       label="地址"
-      width="130">
-    </el-table-column>
-    <el-table-column
-      prop="dochange"
-      label="操作"
-      >
-      <template>
-        <el-tooltip class="item" effect="dark" content="修改" placement="top-start" :enterable="false">
-          <el-button type="primary" icon="el-icon-edit"></el-button>
-    </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="删除" placement="top-start" :enterable="false">
-      <el-button type="primary" icon="el-icon-delete"></el-button>
-    </el-tooltip>
-        
-
-       
-      </template>
-    </el-table-column>
+      width="">
+    </el-table-column> 
   </el-table>
 </template>
 
@@ -102,35 +120,114 @@
 
 <script>
     import {Usergetdata} from'@/api'
+    import{adduser}from'@/api'
+
 
     export default{
+      
         data(){
             return{
+              rules: {
+          name:[
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 1, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
+          ],
+          tel:[
+            { required: true, message: '请输入电话', trigger: 'blur' },
+            { min: 7, max: 11, message: '请输入正确的电话号码', trigger: 'blur' }
+          ], 
+          play:[
+            { required: true, message: '请输入您的角色名称', trigger: 'blur' },
+            { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' }
+          ],
+          address:[
+            { required: true, message: '请输入地址', trigger: 'blur' },
+            { min: 2, max: 12, message: '长度在 2 到 12 个字符', trigger: 'blur' }
+          ]
+            },
+              ruleForm: {
+                name: '',
+                tel:'',
+                play:'',
+                address:''
+
+              },
+              dialogVisible: false,
                 Userlist:[],
-                list:''
+                querylist:'',
+                resultlist:[]
+                
+              
                 }
 
-            },       
+            },      
         methods: {
+          adduser(){
+            this.$refs.addform.validate((valid)=>{
+              if(valid==true){
+                //  this.$http.post('/api/Users',this.ruleForm)
+                adduser().then((data)=>{
+                  this.Userlist=data.data.data
+                  console.log(this.Userlist);
+                  console.log( this.ruleForm);
+                }
+            )
+            Usergetdata().then((data)=>{
+                
+                this.Userlist=data.data.data
+                
+                console.log( this.Userlist);
+           })
+          }
+            })
+          },
+          closeform(){
+              this.$refs.addform.resetFields()
+          },
         handleOpen(){
 
           },
           handleClose(){
 
-          }
+          },
+          result(){
+  
+            this.resultlist = this.Userlist.filter((item)=>
+            
+           {  
+            {
+              return item.name.includes(this.querylist) }
               
-         
+              
+              
+            
+           }
+            )
+            
         },
         
+          },
+      
         mounted(){
+          
           Usergetdata().then((data)=>{
                 
                 this.Userlist=data.data.data
+                this.resultlist=data.data.data
+                console.log( this.Userlist);
            })
     }}
 </script>
 
 <style lang="less" scoped>
+.span{
+  width: 800px;
+  
+}
+.el-form-item{
+  float: left;
+  width: 100%;
+}
     .el-breadcrumb{
         margin-bottom: 20px;
     }
